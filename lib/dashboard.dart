@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:test_octoreality_moadh/question.dart';
 
 class Dashborad extends StatefulWidget {
   const Dashborad({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class Dashborad extends StatefulWidget {
 
 class _DashboradState extends State<Dashborad> {
   var currentIndex = 0;
+  List<String> iconLabel = ["Accueil", "Chat", "Alertes", "Profil"];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,18 +21,9 @@ class _DashboradState extends State<Dashborad> {
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: Container(
-          /* margin: EdgeInsets.all(20), */
           height: size.width * .155,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
-            /* boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.15),
-                blurRadius: 30,
-                offset: Offset(0, 10),
-              ),
-            ], */
-            /* borderRadius: BorderRadius.circular(50), */
           ),
           child: ListView.builder(
             itemCount: 4,
@@ -47,25 +40,36 @@ class _DashboradState extends State<Dashborad> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AnimatedContainer(
                     duration: Duration(milliseconds: 1500),
                     curve: Curves.fastLinearToSlowEaseIn,
                     margin: EdgeInsets.only(
-                      bottom: index == currentIndex ? 0 : size.width * .029,
+                      bottom: index == currentIndex ? 0 : size.width * .002,
                       right: size.width * .0422,
                       left: size.width * .0422,
                     ),
                     width: size.width * .128,
                     height: index == currentIndex ? size.width * .014 : 0,
                   ),
-                  Icon(
-                    listOfIcons[index],
-                    size: size.width * .076,
-                    color: index == currentIndex
-                        ? Colors.green.shade200
-                        : Colors.black38,
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Icon(
+                          listOfIcons[index],
+                          size: size.width * .076,
+                          color: index == currentIndex
+                              ? Colors.green.shade200
+                              : Colors.black38,
+                        ),
+                        Text(
+                          iconLabel[index],
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: size.width * .03),
                 ],
@@ -128,11 +132,16 @@ class _DashboradState extends State<Dashborad> {
                     "Commencer !",
                     style: TextStyle(fontSize: 15),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QuestionScreen()));
+                  },
                 ),
               ),
               Card(
-                elevation: 20,
+                color: Colors.grey.shade200,
                 child: ListTile(
                   title: const Text(
                     "Profil incomplet",
@@ -182,22 +191,25 @@ class _DashboradState extends State<Dashborad> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Card(
+                    color: Colors.grey.shade200,
                     child: Column(
                       children: <Widget>[
-                        const Text.rich(
+                        Text.rich(
                           TextSpan(
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
+                            style: const TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text: 'Suivi du poids  ',
                               ),
                               WidgetSpan(
-                                child: Icon(Icons.arrow_forward),
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.pink.shade400,
+                                ),
                               ),
                             ],
                           ),
@@ -207,19 +219,26 @@ class _DashboradState extends State<Dashborad> {
                         ),
                         CircularPercentIndicator(
                           radius: 150.0,
-                          lineWidth: 6.0,
-                          backgroundColor: Colors.blue.shade900,
+                          lineWidth: 8.0,
+                          backgroundColor: Colors.indigo.shade900,
                           center: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.add,
-                                    size: 35,
+                                    color: Colors.pink.shade400,
+                                    size: 40,
                                   )),
-                              const Text("saisissez"),
-                              const Text("votre poids")
+                              const Text("saisissez",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              const Text("votre poids",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ))
                             ],
                           ),
                         ),
@@ -227,19 +246,24 @@ class _DashboradState extends State<Dashborad> {
                     ),
                   ),
                   Card(
+                    color: Colors.grey.shade200,
                     child: Column(
                       children: <Widget>[
-                        const Text.rich(
+                        Text.rich(
                           TextSpan(
-                            style: TextStyle(
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
                               fontSize: 17,
                             ),
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text: 'Exercice  ',
                               ),
                               WidgetSpan(
-                                child: Icon(Icons.arrow_forward),
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.pink.shade400,
+                                ),
                               ),
                             ],
                           ),
@@ -249,20 +273,30 @@ class _DashboradState extends State<Dashborad> {
                         ),
                         CircularPercentIndicator(
                           radius: 150.0,
-                          lineWidth: 6.0,
-                          backgroundColor: Colors.blue.shade900,
+                          lineWidth: 8.0,
+                          backgroundColor: Colors.indigo.shade900,
                           center: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.add,
-                                    size: 35,
+                                    size: 40,
+                                    color: Colors.pink.shade400,
                                   )),
-                              const Text("connectez"),
-                              const Text("votre app"),
-                              const Text("santé")
+                              const Text("connectez",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              const Text("votre app",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              const Text("santé",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ))
                             ],
                           ),
                         ),
@@ -271,6 +305,9 @@ class _DashboradState extends State<Dashborad> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 10,
+              )
             ]))),
           ],
         ),
